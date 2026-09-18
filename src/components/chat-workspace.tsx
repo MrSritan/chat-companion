@@ -12,7 +12,7 @@ import {
   PanelLeftOpen,
   Plus,
   Search,
-  Sync,
+  RefreshCw,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Shimmer } from "@/components/ai-elements/shimmer";
@@ -190,7 +190,7 @@ export function ChatWorkspace({ threadId }: { threadId: string }) {
             <span className="truncate">Athena Chat</span><ChevronDown className="shrink-0 text-muted-foreground" />
           </Button>
           <div className="flex shrink-0 items-center gap-1.5 text-xs text-muted-foreground" title="Saved in this browser">
-            {syncing ? <Sync className="size-3.5 animate-spin" /> : <Check className="size-3.5 text-primary" />}
+            {syncing ? <RefreshCw className="size-3.5 animate-spin" /> : <Check className="size-3.5 text-primary" />}
             <span className="hidden sm:inline">{syncing ? "Saving" : "Saved"}</span>
           </div>
         </header>
