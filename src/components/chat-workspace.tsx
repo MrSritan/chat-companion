@@ -13,6 +13,8 @@ import {
   Plus,
   Search,
   RefreshCw,
+  Moon,
+  Sun,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Shimmer } from "@/components/ai-elements/shimmer";
@@ -172,7 +174,9 @@ export function ChatWorkspace({ threadId }: { threadId: string }) {
   if (!hydrated || !activeThread) return <div className="min-h-screen bg-background" />;
 
   return (
-    <main className="flex h-dvh overflow-hidden bg-background">
+    <>
+      <input id="theme-toggle" type="checkbox" className="theme-toggle peer sr-only" aria-label="Use dark mode" />
+      <main className="theme-shell flex h-dvh overflow-hidden bg-background text-foreground">
       {!sidebarCollapsed && <aside className="hidden w-72 shrink-0 border-r border-border lg:block"><SidebarContent threads={threads} activeId={threadId} onSelect={selectThread} onNew={newChat} onClose={() => setSidebarCollapsed(true)} /></aside>}
 
       {sidebarOpen && (
@@ -189,9 +193,22 @@ export function ChatWorkspace({ threadId }: { threadId: string }) {
           <Button variant="ghost" className="min-w-0 justify-start px-2 font-display font-semibold shadow-none">
             <span className="truncate">Athena Chat</span><ChevronDown className="shrink-0 text-muted-foreground" />
           </Button>
-          <div className="flex shrink-0 items-center gap-1.5 text-xs text-muted-foreground" title="Saved in this browser">
-            {syncing ? <RefreshCw className="size-3.5 animate-spin" /> : <Check className="size-3.5 text-primary" />}
-            <span className="hidden sm:inline">{syncing ? "Saving" : "Saved"}</span>
+          <div className="flex shrink-0 items-center gap-2">
+            <div className="hidden items-center gap-1.5 text-xs text-muted-foreground sm:flex" title="Saved in this browser">
+              {syncing ? <RefreshCw className="size-3.5 animate-spin" /> : <Check className="size-3.5 text-primary" />}
+              <span>{syncing ? "Saving" : "Saved"}</span>
+            </div>
+            <label
+              htmlFor="theme-toggle"
+              className="theme-switch relative flex h-8 w-[3.25rem] cursor-pointer items-center rounded-full border border-border bg-muted p-1 transition-colors focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2"
+              title="Switch color theme"
+            >
+              <span className="theme-switch-thumb absolute left-1 grid size-6 place-items-center rounded-full bg-card text-foreground shadow-sm transition-transform duration-200">
+                <Sun className="theme-sun size-3.5" />
+                <Moon className="theme-moon hidden size-3.5" />
+              </span>
+              <span className="sr-only">Switch between light and dark mode</span>
+            </label>
           </div>
         </header>
 
@@ -226,6 +243,7 @@ export function ChatWorkspace({ threadId }: { threadId: string }) {
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }
